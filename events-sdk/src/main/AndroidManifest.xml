@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.criteo.events">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <application>
+        <service android:name=".EventSenderService" android:exported="false"/>
+    </application>
+</manifest>

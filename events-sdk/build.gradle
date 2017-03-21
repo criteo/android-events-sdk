@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1'
+    }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 25
+        versionCode 7
+        versionName "1.1.2"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    testCompile 'junit:junit:4.12'
+    testCompile ('org.robolectric:robolectric:3.0-rc2') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    testCompile 'org.mockito:mockito-core:1.10.16'
+    testCompile ('org.skyscreamer:jsonassert:1.2.3') {
+        exclude group: 'org.json', module: 'json'
+    }
+}
+
+// The upload.gradle file is used internally for storing binaries to Criteo's private repository.
+// You can either ignore it or use your own upload file.
+if (file('upload.gradle').exists()) {
+    apply from: 'upload.gradle'
+}
+
+android.libraryVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+        source = variant.javaCompile.source
+        ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+        classpath = files(variant.javaCompile.classpath.files) + files(android.bootClasspath)
+        options.links("http://docs.oracle.com/javase/7/docs/api/")
+        options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
+        options.memberLevel = JavadocMemberLevel.PUBLIC
+        exclude '**/BuildConfig.java'
+        exclude '**/R.java'
+        exclude '**/DeviceInfo.java'
+        exclude '**/EventSenderService.java'
+    }
+}
+
+license {
+    header rootProject.file('LICENSE')
+    include "**/*.java"
+    exclude "**/*Test.java"
+}
