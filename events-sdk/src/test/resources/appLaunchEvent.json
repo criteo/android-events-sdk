@@ -1,1 +1,5 @@
-{"event": "appLaunch", "first_launch":true, "referrer": "googleReferrerTest"}
+{
+  "event": "appLaunch",
+  "first_launch": true,
+  "referrer": "googleReferrerTest"
+}

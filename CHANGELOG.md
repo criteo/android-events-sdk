@@ -1,4 +1,7 @@
 # Events-SDK
+## [1.1.3] - 2017-03-28
+- Removed deprecated call to check if play services are available
+
 ## [1.1.2] - 2017-02-06
 - First open source release
 - Added README.md, LICENSE and CHANGELOG.md

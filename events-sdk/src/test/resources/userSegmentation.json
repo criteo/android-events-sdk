@@ -1,1 +1,11 @@
-{"event": "viewProduct", "product":{"id":"ID123","price":10},"user_segment":{"value": 42, "type":"integer"}}
+{
+  "event": "viewProduct",
+  "product": {
+    "id": "ID123",
+    "price": 10
+  },
+  "user_segment": {
+    "value": 42,
+    "type": "integer"
+  }
+}

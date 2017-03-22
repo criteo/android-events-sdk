@@ -1,1 +1,15 @@
-{"event": "setData","testString":{"value": "testing", "type":"string"},"testInt":{"value": 100, "type":"integer"},"testDate":{"value": "2015-01-01T00:00:00Z", "type":"date"}}
+{
+  "event": "setData",
+  "testString": {
+    "value": "testing",
+    "type": "string"
+  },
+  "testInt": {
+    "value": 100,
+    "type": "integer"
+  },
+  "testDate": {
+    "value": "2015-01-01T00:00:00Z",
+    "type": "date"
+  }
+}

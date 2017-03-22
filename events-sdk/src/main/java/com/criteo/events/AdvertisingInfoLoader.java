@@ -28,21 +28,10 @@ import java.lang.reflect.Method;
  * will throw an IllegalStateException.
  */
 class AdvertisingInfoLoader {
-    private final static int GOOGLE_PLAY_SUCCESS_CODE = 0;
-    private final static String PlayServicesUtilClassName = "com.google.android.gms.common.GooglePlayServicesUtil";
     private final static String AdvertisingIdClientClassName = "com.google.android.gms.ads.identifier.AdvertisingIdClient";
 
     public static AdvertisingInfo getAdvertisingInfo() {
         try {
-            Class<?> googleService = Class.forName(PlayServicesUtilClassName);
-            Method gpsAvail = googleService.getMethod("isGooglePlayServicesAvailable", Context.class);
-
-            int resultCode = (Integer) gpsAvail.invoke(googleService, EventService.context);
-            if (resultCode != GOOGLE_PLAY_SUCCESS_CODE) {
-                CRTOLog.e("Unable to retrieve Google Ad ID");
-                return null;
-            }
-
             ApplicationInfo ai = EventService.context.getPackageManager().getApplicationInfo(EventService.context.getPackageName(), android.content.pm.PackageManager.GET_META_DATA);
             if (ai.metaData.getInt("com.google.android.gms.version") == 0) {
                 CRTOLog.e("You must include and then set the com.google.android.gms.version value in the AndroidManifest.xml file in order to use the GAID");

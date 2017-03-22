@@ -1,1 +1,11 @@
-{"event": "setData","checkin_date":{"value": "2015-01-01T00:00:00Z", "type":"date"}, "checkout_date":{"value": "2015-01-08T00:00:00Z", "type":"date"}}
+{
+  "event": "setData",
+  "checkin_date": {
+    "value": "2015-01-01T00:00:00Z",
+    "type": "date"
+  },
+  "checkout_date": {
+    "value": "2015-01-08T00:00:00Z",
+    "type": "date"
+  }
+}

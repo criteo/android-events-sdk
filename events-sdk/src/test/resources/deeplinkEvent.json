@@ -1,1 +1,4 @@
-{"event": "appDeeplink", "deeplink_uri":"deeplink-me://here-it-is?a=foo&b=bar"}
+{
+  "event": "appDeeplink",
+  "deeplink_uri": "deeplink-me://here-it-is?a=foo&b=bar"
+}

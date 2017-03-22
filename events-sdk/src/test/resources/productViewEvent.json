@@ -1,1 +1,7 @@
-{"event": "viewProduct", "product":{"id":"ID123","price":10}}
+{
+  "event": "viewProduct",
+  "product": {
+    "id": "ID123",
+    "price": 10
+  }
+}
