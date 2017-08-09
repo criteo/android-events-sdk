@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.criteo.android:events-sdk:1.1.3'
+    compile 'com.criteo.android:events-sdk:1.1.4'
 }
 ```
 

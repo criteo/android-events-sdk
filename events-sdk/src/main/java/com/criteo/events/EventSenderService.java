@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.VisibleForTesting;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
@@ -36,11 +35,14 @@ public class EventSenderService extends IntentService {
 
     public EventSenderService() {
         super("EventSenderService");
+        setIntentRedelivery(true);
     }
 
     @Override
     protected void onHandleIntent(Intent eventIntent) {
-        eventQueue.add(eventIntent);
+        if (eventIntent != null) {
+            eventQueue.add(eventIntent);
+        }
         postWaitingIntents();
     }
 

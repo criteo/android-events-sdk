@@ -1,4 +1,7 @@
 # Events-SDK
+## [1.1.4] - 2017-08-09
+- Fixed an issue causing a NullPointerException in certain conditions
+
 ## [1.1.3] - 2017-03-28
 - Removed deprecated call to check if play services are available
 
