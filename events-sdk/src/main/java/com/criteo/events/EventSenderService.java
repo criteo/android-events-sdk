@@ -126,6 +126,14 @@ public class EventSenderService extends IntentService {
         intent.putExtra("timestamp", eventTimestamp);
         intent.putExtra("retries", 0);
 
-        context.startService(intent);
+        try {
+            context.startService(intent);
+        }
+        catch (IllegalStateException e) {
+            CRTOLog.e("Unable to start service", e);
+        }
+        catch (SecurityException e) {
+            CRTOLog.e("Permission refused or service not found", e);
+        }
     }
 }

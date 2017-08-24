@@ -1,4 +1,8 @@
 # Events-SDK
+
+## [1.1.5] - 2017-08-23
+- Fixed a potential exception on Android Oreo
+
 ## [1.1.4] - 2017-08-09
 - Fixed an issue causing a NullPointerException in certain conditions
 
