@@ -159,6 +159,37 @@ public class EventSenderServiceTest {
     }
 
     @Test
+    public void testNullIntentAction() {
+        Mockito.when(eventPoster.post(Mockito.anyString())).thenReturn(EventPoster.PostResult.DONE);
+        SendPolicy sendPolicy = new SendPolicy();
+        Mockito.when(eventPoster.getSendPolicy()).thenReturn(sendPolicy);
+
+        Intent intent = new Intent(context, TestableEventSenderService.class);
+        intent.setAction(null);
+
+        eventSenderService.onStartCommand(intent, 0, 42);
+        eventSenderService.onHandleIntent(intent);
+
+        Mockito.verify(eventPoster, Mockito.never()).post(Mockito.anyString());
+        Assert.assertEquals(0, eventSenderService.getQueueSize());
+    }
+
+    @Test
+    public void testNullIntent() {
+        Mockito.when(eventPoster.post(Mockito.anyString())).thenReturn(EventPoster.PostResult.DONE);
+        SendPolicy sendPolicy = new SendPolicy();
+        Mockito.when(eventPoster.getSendPolicy()).thenReturn(sendPolicy);
+
+        Intent intent = null;
+
+        eventSenderService.onStartCommand(intent, 0, 42);
+        eventSenderService.onHandleIntent(intent);
+
+        Mockito.verify(eventPoster, Mockito.never()).post(Mockito.anyString());
+        Assert.assertEquals(0, eventSenderService.getQueueSize());
+    }
+
+    @Test
     public void testExpiredEvent() throws Exception {
         Mockito.when(eventPoster.post(Mockito.anyString())).thenReturn(EventPoster.PostResult.DONE);
         SendPolicy sendPolicy = new SendPolicy(15, 1000, 3, 3); // event expires after 1 second
@@ -174,7 +205,7 @@ public class EventSenderServiceTest {
     }
 
     @Test
-    public void TestRetry() throws Exception {
+    public void testRetry() throws Exception {
         Mockito.when(eventPoster.post(Mockito.anyString())).thenReturn(EventPoster.PostResult.RETRY_LATER);
         SendPolicy sendPolicy = new SendPolicy(15, 30000, 3, 3); // 3 attempts
         Mockito.when(eventPoster.getSendPolicy()).thenReturn(sendPolicy);
@@ -250,7 +281,7 @@ public class EventSenderServiceTest {
     }
 
     @Test
-    public void TestRedirect() throws Exception {
+    public void testRedirect() throws Exception {
         Mockito.when(eventPoster.post(Mockito.anyString())).thenReturn(EventPoster.PostResult.REDIRECT);
         SendPolicy sendPolicy = new SendPolicy(15, 30000, 5000, 3); // 15 items max in the queue, 3 redirect attempts
         Mockito.when(eventPoster.getSendPolicy()).thenReturn(sendPolicy);

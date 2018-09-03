@@ -61,7 +61,8 @@ public class EventSenderService extends IntentService {
      */
     private boolean postIntent(Intent eventIntent) {
         // make sure we were called with the correct intent action
-        if (!eventIntent.getAction().equals(ACTION_SEND_EVENT)) {
+        String action = eventIntent.getAction();
+        if (action == null || !action.equals(ACTION_SEND_EVENT)) {
             return true;
         }
 

@@ -1,5 +1,8 @@
 # Events-SDK
 
+## [1.1.6] - 2018-09-03
+- Fixed NullPointerException in EventSenderService
+
 ## [1.1.5] - 2017-08-23
 - Fixed a potential exception on Android Oreo
 
