@@ -44,6 +44,7 @@ public class EventService {
     private String accountName;
 
     private Executor executor;
+    private JSONSerializer jsonSerializer = new JSONSerializer();
 
     static String sharedPrefs = "CriteoTracker";
     static Context context;
@@ -263,7 +264,7 @@ public class EventService {
      */
     public void send(AppLaunchEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -272,7 +273,7 @@ public class EventService {
      */
     public void send(BasketViewEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -281,7 +282,7 @@ public class EventService {
      */
     public void send(HomeViewEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -290,7 +291,7 @@ public class EventService {
      */
     public void send(ProductListViewEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -299,7 +300,7 @@ public class EventService {
      */
     public void send(ProductViewEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -308,7 +309,7 @@ public class EventService {
      */
     public void send(TransactionConfirmationEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -317,7 +318,7 @@ public class EventService {
      */
     public void send(DataEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     /**
@@ -326,7 +327,7 @@ public class EventService {
      */
     public void send(DeeplinkEvent event) {
         event.setTimestamp(new Date());
-        sendSerializedEvent(JSONSerializer.serializeToJSON(event), event.getTimestamp().getTime());
+        sendSerializedEvent(jsonSerializer.serializeToJSON(event), event.getTimestamp().getTime());
     }
 
     private static String getDefaultCountry() {

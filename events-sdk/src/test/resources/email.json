@@ -7,7 +7,7 @@
   "app_info": {
     "app_country": "US",
     "app_language": "en",
-    "sdk_version": "1.1.6",
+    "sdk_version": "1.1.7",
     "app_id": "org.robolectric.default",
     "app_name": "org.robolectric.default"
   },

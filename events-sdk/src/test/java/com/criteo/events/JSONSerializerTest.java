@@ -24,12 +24,14 @@ import java.util.Locale;
 public class JSONSerializerTest {
 
     EventService eventService;
+    JSONSerializer jsonSerializer;
 
     @Before
     public void setUp() {
         Locale.setDefault(Locale.US);
         eventService = new EventService(RuntimeEnvironment.application);
         DeviceInfo.setIdentifiers("", false);
+        jsonSerializer = new JSONSerializer();
     }
 
     @Test
@@ -38,7 +40,7 @@ public class JSONSerializerTest {
         AppLaunchEvent appLaunchEvent = new AppLaunchEvent();
         appLaunchEvent.setGoogleReferrer("googleReferrerTest");
 
-        JSONObject output = JSONSerializer.serializeToJSON(appLaunchEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(appLaunchEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -49,7 +51,7 @@ public class JSONSerializerTest {
         BasketViewEvent basketViewEvent = new BasketViewEvent(new BasketProduct("ID123", 5, 10));
         basketViewEvent.setCurrency(Currency.getInstance("GBP"));
 
-        JSONObject output = JSONSerializer.serializeToJSON(basketViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(basketViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -59,7 +61,7 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("homeViewEvent.json");
         HomeViewEvent homeViewEvent = new HomeViewEvent();
 
-        JSONObject output = JSONSerializer.serializeToJSON(homeViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(homeViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -69,7 +71,7 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("productListViewEvent.json");
         ProductListViewEvent productListViewEvent = new ProductListViewEvent(new Product("ID123", 10), new Product("ID456", 5));
 
-        JSONObject output = JSONSerializer.serializeToJSON(productListViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(productListViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -79,7 +81,7 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("productViewEvent.json");
         ProductViewEvent productViewEvent = new ProductViewEvent(new Product("ID123", 10));
 
-        JSONObject output = JSONSerializer.serializeToJSON(productViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(productViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -89,7 +91,7 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("transactionConfirmationEvent.json");
         TransactionConfirmationEvent transactionConfirmationEvent = new TransactionConfirmationEvent("TransactionID123", new BasketProduct("ID123", 1, 2), new BasketProduct("ID456", 3, 4));
 
-        JSONObject output = JSONSerializer.serializeToJSON(transactionConfirmationEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(transactionConfirmationEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -100,7 +102,7 @@ public class JSONSerializerTest {
         TransactionConfirmationEvent transactionConfirmationEvent = new TransactionConfirmationEvent("TransactionID123", new BasketProduct("ID123", 1, 2), new BasketProduct("ID456", 3, 4));
         transactionConfirmationEvent.setDeduplication(true);
 
-        JSONObject output = JSONSerializer.serializeToJSON(transactionConfirmationEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(transactionConfirmationEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -111,7 +113,7 @@ public class JSONSerializerTest {
         TransactionConfirmationEvent transactionConfirmationEvent = new TransactionConfirmationEvent("TransactionID123", new BasketProduct("ID123", 1, 2), new BasketProduct("ID456", 3, 4));
         transactionConfirmationEvent.setDeduplication(false);
 
-        JSONObject output = JSONSerializer.serializeToJSON(transactionConfirmationEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(transactionConfirmationEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -122,7 +124,7 @@ public class JSONSerializerTest {
         TransactionConfirmationEvent transactionConfirmationEvent = new TransactionConfirmationEvent("TransactionID123", new BasketProduct("ID123", 1, 2), new BasketProduct("ID456", 3, 4));
         transactionConfirmationEvent.setNewCustomer(true);
 
-        JSONObject output = JSONSerializer.serializeToJSON(transactionConfirmationEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(transactionConfirmationEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -133,7 +135,7 @@ public class JSONSerializerTest {
         TransactionConfirmationEvent transactionConfirmationEvent = new TransactionConfirmationEvent("TransactionID123", new BasketProduct("ID123", 1, 2), new BasketProduct("ID456", 3, 4));
         transactionConfirmationEvent.setNewCustomer(false);
 
-        JSONObject output = JSONSerializer.serializeToJSON(transactionConfirmationEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(transactionConfirmationEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -143,7 +145,7 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("dataEvent.json");
         DataEvent dataEvent = new DataEvent();
 
-        JSONObject output = JSONSerializer.serializeToJSON(dataEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(dataEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -153,7 +155,17 @@ public class JSONSerializerTest {
         JSONObject testCase = JsonReader.readJson("deeplinkEvent.json");
         DeeplinkEvent deeplinkEvent = new DeeplinkEvent("deeplink-me://here-it-is?a=foo&b=bar");
 
-        JSONObject output = JSONSerializer.serializeToJSON(deeplinkEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(deeplinkEvent);
+        testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
+        JSONAssert.assertEquals(testCase, output, true);
+    }
+
+    @Test
+    public void testDeeplinkEventWithAccessToken() throws Exception {
+        JSONObject testCase = JsonReader.readJson("deeplinkEventAccessToken.json");
+        DeeplinkEvent deeplinkEvent = new DeeplinkEvent("deeplink-me://here-it-is?a=foo&b=bar&access_token=EAAZDGZIUD153Z");
+
+        JSONObject output = jsonSerializer.serializeToJSON(deeplinkEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -169,7 +181,7 @@ public class JSONSerializerTest {
         dataEvent.addExtraData("testInt", 100);
         dataEvent.addExtraData("testDate", calendar);
 
-        JSONObject output = JSONSerializer.serializeToJSON(dataEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(dataEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
 
         //Float has to be input manually as JSONObject by default reads in real numbers as doubles
@@ -188,7 +200,7 @@ public class JSONSerializerTest {
         dataEvent.setStartDate(startDate);
         dataEvent.setEndDate(endDate);
 
-        JSONObject output = JSONSerializer.serializeToJSON(dataEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(dataEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -298,7 +310,7 @@ public class JSONSerializerTest {
         double price = 999.85;
         ProductViewEvent productViewEvent = new ProductViewEvent(new Product("ID123", price));
 
-        JSONObject output = JSONSerializer.serializeToJSON(productViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(productViewEvent);
         Assert.assertEquals(price, output.getJSONObject("product").getDouble("price"));
     }
 
@@ -328,7 +340,7 @@ public class JSONSerializerTest {
         ProductViewEvent productViewEvent = new ProductViewEvent(new Product("ID123", 10));
         productViewEvent.setUserSegment(42);
 
-        JSONObject output = JSONSerializer.serializeToJSON(productViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(productViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }
@@ -337,7 +349,7 @@ public class JSONSerializerTest {
     public void testSetPayloadEvent() throws Exception {
         JSONObject testCase = JsonReader.readJson("setPayloadEvent.json");
         HomeViewEvent homeViewEvent = new HomeViewEvent();
-        JSONObject serializedEvent = JSONSerializer.serializeToJSON(homeViewEvent);
+        JSONObject serializedEvent = jsonSerializer.serializeToJSON(homeViewEvent);
 
         JSONObject output = JSONSerializer.commonPayload(eventService);
         JSONSerializer.setPayloadEvent(output, serializedEvent);
@@ -354,7 +366,7 @@ public class JSONSerializerTest {
         ProductViewEvent productViewEvent = new ProductViewEvent(new Product("ID123", 10));
         productViewEvent.addExtraData("nbra", 2).addExtraData("nbrc", 1).addExtraData("nbrr", 1);
 
-        JSONObject output = JSONSerializer.serializeToJSON(productViewEvent);
+        JSONObject output = jsonSerializer.serializeToJSON(productViewEvent);
         testCase.put(EventKeys.TIMESTAMP, output.get(EventKeys.TIMESTAMP));
         JSONAssert.assertEquals(testCase, output, true);
     }

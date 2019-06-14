@@ -32,7 +32,9 @@ import java.util.Map;
 import java.util.TimeZone;
 
 class JSONSerializer {
-    static JSONObject serializeToJSON(AppLaunchEvent event) {
+    private AccessTokenFilter accessTokenFilter = new AccessTokenFilter();
+
+    JSONObject serializeToJSON(AppLaunchEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -53,7 +55,7 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(BasketViewEvent event) {
+    JSONObject serializeToJSON(BasketViewEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -86,7 +88,7 @@ class JSONSerializer {
     }
 
 
-    static JSONObject serializeToJSON(HomeViewEvent event) {
+    JSONObject serializeToJSON(HomeViewEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -102,7 +104,7 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(ProductListViewEvent event) {
+    JSONObject serializeToJSON(ProductListViewEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -134,7 +136,7 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(ProductViewEvent event) {
+    JSONObject serializeToJSON(ProductViewEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -161,7 +163,7 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(TransactionConfirmationEvent event) {
+    JSONObject serializeToJSON(TransactionConfirmationEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -196,7 +198,7 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(DataEvent event) {
+    JSONObject serializeToJSON(DataEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
@@ -212,13 +214,16 @@ class JSONSerializer {
         }
     }
 
-    static JSONObject serializeToJSON(DeeplinkEvent event) {
+    JSONObject serializeToJSON(DeeplinkEvent event) {
         try {
             JSONObject serializedEvent = new JSONObject();
 
             serializedEvent.put(EventKeys.EVENTNAME, EventKeys.DEEPLINK_EVENT);
             serializedEvent.put(EventKeys.TIMESTAMP, getFormattedDate(event.getTimestamp()));
-            serializedEvent.put(EventKeys.DEEPLINK, event.getDeeplinkUrl());
+
+            String filteredDeeplinkUrl = accessTokenFilter.filter(event.getDeeplinkUrl());
+
+            serializedEvent.put(EventKeys.DEEPLINK, filteredDeeplinkUrl);
             serializedEvent = addExtraData(event, serializedEvent);
 
             return serializedEvent;

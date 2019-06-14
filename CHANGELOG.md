@@ -1,5 +1,8 @@
 # Events-SDK
 
+## [1.1.7] - 2019-06-17
+- Fixed a bug causing some deeplinks to be sent with sensitive data
+
 ## [1.1.6] - 2018-09-03
 - Fixed NullPointerException in EventSenderService
 

@@ -1,0 +1,4 @@
+{
+  "event": "appDeeplink",
+  "deeplink_uri": "deeplink-me://here-it-is?a=foo&b=bar&access_token=__REDACTED_ACCESS_TOKEN__"
+}
