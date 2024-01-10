@@ -1,5 +1,9 @@
 # Criteo Events SDK
 
+**<ins>UPDATE</ins>: this SDK has been deprecated as of March 2022 and is no longer supported by our teams.**
+
+**Contact your technical contact at Criteo in case of questions/concerns about your App Integration.**
+
 Thanks for looking at the Criteo Events SDK! It allows Android applications to easily send events
 back to Criteo to power your targeted campaigns.
 
